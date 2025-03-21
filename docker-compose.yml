@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: laravel-mirai
+    ports:
+      - "8000:8000"
+      - "5173:5173"
+    volumes:
+      - ./src:/var/www
+    working_dir: /var/www/
+    command: php artisan serve --host=0.0.0.0
+
+  db:
+    image: mysql:8.3
+    container_name: laravel-mirai-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+    ports:
+      - "3306:3306"
+    volumes:
+      - laravel-mirai-db-data:/var/lib/mysql
+
+volumes:
+  laravel-mirai-db-data:
